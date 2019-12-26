@@ -4,8 +4,8 @@
     <img src="../assets/index2.png" alt="">
     <img src="../assets/index3.png" alt="">
     <img src="../assets/index4.png" alt="">
-    <img src="../assets/index5.png" alt="">
-    <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>
+    <img @click="goToUrl('sign')" src="../assets/index5.png" alt="">
+<!--    <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>-->
 <!--    <audio ref="audio"  controls="controls"  src="../assets/BGM.mp3" />-->
   </div>
 </template>
