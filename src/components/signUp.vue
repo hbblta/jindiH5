@@ -6,7 +6,15 @@
           <p>手 机</p>
           <div><input v-model="signData.mobile"  type="text"></div>
           <p>房 号</p>
-          <div><input v-model="signData.room"  type="text"></div>
+          <div>
+            <select class="selectHtml">
+              <option class="optionHtml">Volvo</option>
+              <option>Saab</option>
+              <option>Mercedes</option>
+              <option>Audi</option>
+            </select>
+<!--            <input v-model="signData.room"  type="text">-->
+          </div>
           <p>{{errorText}}</p>
         </div>
       <div class="signDate">
@@ -95,6 +103,22 @@
   }
   .signForm div input{
     width:405px;
+    height:47px;
+    padding-left: 10px;
+    opacity:0.5;
+    border: 0;
+    margin-top: 6px;
+  }
+  .optionHtml{
+    width:350px;
+    height:47px;
+    /*padding-left: 10px;*/
+    opacity:0.5;
+    border: 0;
+    margin-top: 6px;
+  }
+  .selectHtml{
+    width:415px;
     height:47px;
     padding-left: 10px;
     opacity:0.5;
