@@ -1,8 +1,7 @@
 import ajax from 'axios';
-import qs from 'qs';
 export default{
   get(urlDta) {
-    let url = 'https://api.zjdandaotech.com/'+urlDta
+    let url = 'https://jdapi.zjdandaotech.com/'+urlDta
     return new Promise((resolve, reject) => {
       ajax({
         url: url,
@@ -18,13 +17,37 @@ export default{
         });
     });
   },
-  post(urlData,data) {
-    let url = 'https://api.zjdandaotech.com/'+urlData
+  gets(urlDta,token) {
+    let url = 'https://jdapi.zjdandaotech.com/'+urlDta
+    return new Promise((resolve, reject) => {
+      ajax({
+        url: url,
+        method: 'get',
+        headers : {
+          'authorization': token
+        },
+      })
+        .then((res) => {
+          resolve(res.data);
+          // console.log(res);
+        })
+        .catch(function (error) {
+          reject(error);
+          // console.log(error);
+        });
+    });
+  },
+  post(urlData,data,token) {
+    let url = 'https://jdapi.zjdandaotech.com/'+urlData
     return new Promise((resolve, reject) => {
       ajax({
         url: url,
         method: 'post',
-        data: qs.stringify(data)
+        headers : {
+          'authorization': token,
+          'Content-Type': 'application/json'
+        },
+        data: data
       })
         .then((res) => {
           resolve(res.data);

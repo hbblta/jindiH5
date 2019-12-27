@@ -1,11 +1,11 @@
 <template>
   <div class="indexHtml">
-    <img src="../assets/index1.png" alt="">
-    <img src="../assets/index2.png" alt="">
-    <img src="../assets/index3.png" alt="">
-    <img src="../assets/tickets2.png" alt="">
-    <img src="../assets/tickets3.png" @click="goToUrl('seckill')" alt="">
-    <img src="../assets/tickets4.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index1.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index2.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index3.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/tickets2.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/tickets3.png" @click="goToUrl('seckill')" alt="">
+    <img src="https://img.hm8848.com/APP/jd/tickets4.png" alt="">
     <!--    <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>-->
     <!--    <audio ref="audio"  controls="controls"  src="../assets/BGM.mp3" />-->
   </div>
@@ -24,7 +24,7 @@
     },
     methods: {
       goToUrl(url) {
-        this.$router.push({
+        this.$router.replace({
           path: url,
           // query:{
           //   id:this.id ,
@@ -39,7 +39,7 @@
   .indexHtml{
     width:750px;
     height:1610px;
-    background: url('../assets/tickets1.png') no-repeat;
+    background: url('https://img.hm8848.com/APP/jd/tickets1.jpg') no-repeat;
     background-size: 100% 100%;
     overflow: hidden;
   }
@@ -147,7 +147,7 @@
     height: 30px;
     background: white;
     background-size: contain;
-    -webkit-mask-image: url('../assets/units-icons.png');
+    -webkit-mask-image: url('https://img.hm8848.com/APP/jd/units-icons.png');
     -webkit-mask-size: cover;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: 0 0;

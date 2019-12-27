@@ -1,12 +1,10 @@
 <template>
   <div class="indexHtml">
-    <img src="../assets/index1.png" alt="">
-    <img src="../assets/index2.png" alt="">
-    <img src="../assets/index3.png" alt="">
-    <img src="../assets/index4.png" alt="">
-    <img @click="goToUrl('sign')" src="../assets/index5.png" alt="">
-<!--    <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>-->
-<!--    <audio ref="audio"  controls="controls"  src="../assets/BGM.mp3" />-->
+    <img src="https://img.hm8848.com/APP/jd/index1.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index2.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index3.png" alt="">
+    <img src="https://img.hm8848.com/APP/jd/index4.png" alt="">
+    <img @click="goToUrl('sign')" src="https://img.hm8848.com/APP/jd/index5.png" alt="">
   </div>
 </template>
 
@@ -15,15 +13,13 @@
     name: "index",
     data() {
       return {
-        musicBol : false
       }
     },
     mounted() {
-      // setTimeout(()=>{
-      //   this.$refs.audio.play()
-      // },1000)
     },
     created() {
+      var that = this
+      // window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4420c343d1a47a60&redirect_uri=https%3A%2F%2Fjd.zjdandaotech.com&response_type=code&scope=snsapi_base&state=#wechat_redirect'
       // this.ajax.get('categories?pattern=index').then((res) => {
       //   this.list = res.data
       // })
@@ -33,21 +29,50 @@
       // this.ajax.get('storedobjects/indexqrcode').then((res) => {
       //   this.erweiList = res.data
       // })
+      // localStorage.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcGVuaWQiOiJvX1l0ZTFFVTQyUjB1NTBMS1gyTE9VQjRhWGo0In0.y_LcQpHC1Ip06pZN6uAkImjYuFz7E-ZHyFeL4IfdFRc')
+      if(localStorage.getItem('token')){
+        this.ajax.gets('users',localStorage.getItem('token')).then((res) => {
+          if(res.code == 401){
+            localStorage.removeItem('token');
+          }
+          if(res.name != '' && res.mobile != '' && res.room != ''){
+            this.goToUrl('tickets')
+          }
+        })
+      }else {
+        const getLogin = () => {
+          let url = 'https%3A%2F%2Fjd.zjdandaotech.com%2Findex.html' // 重定向返回地址
+          let wxappid = 'wx4420c343d1a47a60' // 微信公众号appid
+          let str = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxappid + '&redirect_uri=' + url + '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          window.location.href = str
+        }
+        var WXcode
+        var WXInfo = localStorage.getItem('WXInfo') ? JSON.parse(localStorage.getItem('WXInfo')) : 'noLogin'
+        let str = window.location.href
+        var ua = navigator.userAgent.toLowerCase()
+        var isWeixin = ua.indexOf('micromessenger') !== -1 // 是否 在微信浏览器内
+        let isURL = window.location.href.indexOf('code=') === -1 // 是否 没有授权重定向回来
+        if (isWeixin && WXInfo === 'noLogin' && isURL) {
+          getLogin()
+        }
+// // 重定向回来
+        if (!isURL) {
+          let num1 = str.indexOf('code=')
+          let num2 = str.indexOf('&state=')
+          WXcode = str.slice(num1 + 5, num2)
+          localStorage.setItem('WXcode', JSON.stringify(WXcode))
+          that.ajax.get('login?code='+WXcode).then((res) => {
+            if(res.code == 0){
+              localStorage.setItem('token', res.token)
+            }
+          })
+        }
+      }
+
     },
     methods: {
-      playClicked(){
-        let audio = new Audio();
-        audio.src = "../assets/BGM.mp3";
-        if(audio.paused) {
-          audio.play();
-          this.musicBol = true
-        }else{
-          audio.pause();
-          this.musicBol = false
-        }
-      },
       goToUrl(url) {
-        this.$router.push({
+        this.$router.replace({
           path: url,
           // query:{
           //   id:this.id ,
@@ -62,7 +87,7 @@
   .indexHtml{
     width:750px;
     height:1610px;
-    background: url('../assets/backgroundIndex.jpg') no-repeat;
+    background: url('https://img.hm8848.com/APP/jd/backgroundIndex.jpg') no-repeat;
     background-size: 100% 100%;
     overflow: hidden;
   }
@@ -149,27 +174,5 @@
     32%{-webkit-transform:scale3d(.95,1.05,1);transform:scale3d(.95,1.05,1)}
     37%{-webkit-transform:scale3d(1.05,.95,1);transform:scale3d(1.05,.95,1)}
     50%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
-  }
-  .music{
-    position: fixed;
-    right: 5px;
-    top: 5px;
-    display: block;
-    z-index: 9;
-    width: 30px;
-    height: 30px;
-    background: white;
-    background-size: contain;
-    -webkit-mask-image: url('../assets/units-icons.png');
-    -webkit-mask-size: cover;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: 0 0;
-  }
-  .on{
-    animation: reverseRotataZ 1.2s linear infinite;
-  }
-  @keyframes reverseRotataZ{
-    0%{-webkit-transform:rotate(0deg)}
-    100%{-webkit-transform:rotate(-360deg)}
   }
 </style>

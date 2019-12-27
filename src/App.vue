@@ -1,6 +1,17 @@
 <template>
   <div id="app">
     <router-view/>
+        <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>
+        <audio
+          id="videos"
+          ref="videos"
+          loop="loop"
+          style="display: none"
+          x-webkit-airplay="true"
+          x5-playsinline="true"
+          webkit-playsinline="true"
+          playsinline="true"
+          src="https://img.hm8848.com/APP/BGM.mp3" />
   </div>
 </template>
 
@@ -9,15 +20,27 @@ export default {
   name: 'App',
   data(){
     return{
-      musicBol : true
+      musicBol : false,
     }
   },
-
-  updated() {
-
+  mounted() {
+    var that =this
+    document.addEventListener('WeixinJSBridgeReady',function(){
+      document.getElementById('videos').play()
+      that.musicBol = true
+    },false);
   },
   methods: {
+    playClicked(){
+      if(!this.$refs.videos.paused){
+        this.musicBol = false
+        this.$refs.videos.pause()
+      }else{
+        this.musicBol = true
+        this.$refs.videos.play()
+      }
 
+    },
   }
 }
 </script>
@@ -28,21 +51,29 @@ export default {
     padding: 0;
     margin: 0;
   }
-  /*::-webkit-scrollbar-track { background-color: rgba(0,0,0,0.2);  }*/
-  /*::-webkit-scrollbar {  width: 0px;height:8px;  background-color: #F5F5F5;border-radius: 5px;  }*/
-  /*::-webkit-scrollbar-thumb { !* *!background: #0C4EA2;border-radius: 5px; }*/
-  /*::-webkit-scrollbar-corner{ background-color: #F5F5F5;}*/
-  /*html {*/
-  /*  !*隐藏滚动条，当IE下溢出，仍然可以滚动*!*/
-  /*  -ms-overflow-style:none;*/
-  /*  !*火狐下隐藏滚动条*!*/
-  /*  overflow:-moz-scrollbars-none;*/
-  /*}*/
-  /*!*Chrome下隐藏滚动条，溢出可以透明滚动*!*/
-  /*html::-webkit-scrollbar{width:0px}*/
-  /*#app{*/
-  /*  min-width:750px;*/
-  /*  height:540px;*/
-  /*  background: #EDF0F5;*/
-  /*}*/
+
+  .music{
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    display: block;
+    z-index: 9;
+    width: 50px;
+    height: 50px;
+    background: white;
+    background-size: contain;
+    cursor:pointer;
+    user-select: none;
+    -webkit-mask-image: url('https://img.hm8848.com/APP/jd/units-icons.png');
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: 0 0;
+  }
+  .on{
+    animation: reverseRotataZ 1.2s linear infinite;
+  }
+  @keyframes reverseRotataZ{
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(-360deg)}
+  }
 </style>
