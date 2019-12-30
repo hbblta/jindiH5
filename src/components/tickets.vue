@@ -6,8 +6,6 @@
     <img src="https://img.hm8848.com/APP/jd/tickets2.png" alt="">
     <img src="https://img.hm8848.com/APP/jd/tickets3.png" @click="goToUrl('seckill')" alt="">
     <img src="https://img.hm8848.com/APP/jd/tickets4.png" alt="">
-    <!--    <div class="music" :class="musicBol ? 'on' : ''" @click="playClicked()"></div>-->
-    <!--    <audio ref="audio"  controls="controls"  src="../assets/BGM.mp3" />-->
   </div>
 </template>
 
@@ -16,9 +14,13 @@
     name: "tickets",
     data() {
       return {
+        a : ''
       }
     },
     mounted() {
+      // this.ajax.gets('users',localStorage.getItem('token')).then((res) => {
+      //   this.a = JSON.stringify(res)
+      // })
     },
     created() {
     },

@@ -5,6 +5,7 @@
     <img src="https://img.hm8848.com/APP/jd/index3.png" alt="">
     <img src="https://img.hm8848.com/APP/jd/index4.png" alt="">
     <img @click="goToUrl('sign')" src="https://img.hm8848.com/APP/jd/index5.png" alt="">
+    <img @click="goToUrl('sign')" src="https://img.hm8848.com/APP/jd/s.png" alt="">
   </div>
 </template>
 
@@ -33,9 +34,10 @@
       if(localStorage.getItem('token')){
         this.ajax.gets('users',localStorage.getItem('token')).then((res) => {
           if(res.code == 401){
+            this.goToUrl('/')
             localStorage.removeItem('token');
           }
-          if(res.name != '' && res.mobile != '' && res.room != ''){
+          if(res.data.name != '' && res.data.mobile != '' && res.data.room != ''){
             this.goToUrl('tickets')
           }
         })
@@ -141,6 +143,19 @@
     animation:three 1s 1s,rubberBand infinite 2s 2s;
     animation-fill-mode:forwards;
   }
+  .indexHtml img:nth-child(6){
+    display: block;
+    margin: 0 auto;
+    opacity: 0;
+    position: relative;
+    top: -45px;
+    transform: rotate(-30deg);
+    left: 130px;
+    height:140px;
+    width:140px;
+    animation:six 1s 2s,porhead infinite 2s 2s;
+    animation-fill-mode:forwards;
+  }
   @keyframes one
   {
     from {    padding-top: 0px;opacity: 0}
@@ -165,6 +180,15 @@
   {
     from {    width:201px;height: 63px}
     to {   width:251px;height: 50px}
+  }
+  @keyframes six
+  {
+    from {    opacity: 0;}
+    to {   opacity: 0.8;}
+  }
+  @keyframes porhead{
+    from {   transform: scale(1.2)rotate(-30deg)}
+    to {    transform: scale(0.8)rotate(-30deg)}
   }
   @keyframes rubberBand{
     0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}
